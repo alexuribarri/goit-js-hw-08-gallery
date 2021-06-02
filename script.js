@@ -63,25 +63,36 @@ function onEsc(e) {
 
 //horizontal slider function to change images with arrows
 
-function horizontalSlider(event) {
-  const urlArray = [];
-  items.map((item) => urlArray.push(item.original));
-  let currentUrlIndex = urlArray.indexOf(modalImageEl.src);
+const urlArray = [];
+const altArray = [];
+items.map((item) => urlArray.push(item.original));
+items.map((item) => altArray.push(item.description));
 
+function attributeUpdater(direction) {
+  modalImageEl.src = `${urlArray[direction]}`;
+  modalImageEl.alt = `${altArray[direction]}`;
+}
+
+function horizontalSlider(event) {
   function counter(direction) {
+    let currentUrlIndex = urlArray.indexOf(modalImageEl.src);
     const maxLimit = urlArray.length;
     if (direction === "right") {
       if (currentUrlIndex === maxLimit - 1) {
         currentUrlIndex = -1;
       }
-      modalImageEl.src = `${urlArray[currentUrlIndex + 1]}`;
+
+      attributeUpdater(currentUrlIndex + 1);
+      //modalImageEl.src = `${urlArray[currentUrlIndex + 1]}`;
     }
 
     if (direction === "left") {
       if (currentUrlIndex === 0) {
         currentUrlIndex = maxLimit;
       }
-      modalImageEl.src = `${urlArray[currentUrlIndex - 1]}`;
+
+      attributeUpdater(currentUrlIndex - 1);
+      // modalImageEl.src = `${urlArray[currentUrlIndex - 1]}`;
     }
   }
 
